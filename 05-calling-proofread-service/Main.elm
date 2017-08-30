@@ -21,7 +21,7 @@ main =
 -- MODEL
 
 
-type alias Message =
+type alias Comment =
     { message : String
     , offset : Int
     , length : Int
@@ -30,7 +30,7 @@ type alias Message =
 
 type alias Model =
     { text : String
-    , comments : List Message
+    , comments : List Comment
     }
 
 
@@ -59,7 +59,7 @@ subscriptions model =
 type Msg
     = SetText String
     | Proofread
-    | ProofreadResult (Result Http.Error (List Message))
+    | ProofreadResult (Result Http.Error (List Comment))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -71,8 +71,8 @@ update msg model =
         Proofread ->
             ( model, requestProofread model.text )
 
-        ProofreadResult (Ok messages) ->
-            ( { model | comments = messages }, Cmd.none )
+        ProofreadResult (Ok comments) ->
+            ( { model | comments = comments }, Cmd.none )
 
         ProofreadResult (Err error) ->
             ( model, Cmd.none )
@@ -111,7 +111,7 @@ requestProofread text =
             Http.stringBody "application/x-www-form-urlencoded" (encodeProofreadRequest text)
 
         request =
-            Http.post url body messageListDecoder
+            Http.post url body commentListDecoder
     in
     Http.send ProofreadResult request
 
@@ -124,14 +124,14 @@ encodeProofreadRequest text =
         ]
 
 
-messageDecoder : Decoder Message
-messageDecoder =
-    map3 Message
+commentDecoder : Decoder Comment
+commentDecoder =
+    map3 Comment
         (field "message" string)
         (field "offset" int)
         (field "length" int)
 
 
-messageListDecoder : Decoder (List Message)
-messageListDecoder =
-    at [ "matches" ] (list messageDecoder)
+commentListDecoder : Decoder (List Comment)
+commentListDecoder =
+    at [ "matches" ] (list commentDecoder)
