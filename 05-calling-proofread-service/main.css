@@ -1,0 +1,31 @@
+#app {
+     width: 80%;
+     margin: 0 auto;
+}
+
+.text-editor {
+    border: 1px solid #666;
+    width: 100%;
+    min-height: 200px;
+    margin: .5rem;
+}
+
+.proofread-panel {
+    border: 1px solid #666;
+    width: 100%;
+    min-height: 200px;
+    margin: .5rem;
+
+    white-space: pre-wrap;
+}
+
+.note {
+    font-size: 2rem;
+    font-family: sans-serif;
+    margin: .5rem;
+}
+
+button {
+    margin: .5rem 1.5rem .5rem .5rem;
+    padding: 1rem;
+}
