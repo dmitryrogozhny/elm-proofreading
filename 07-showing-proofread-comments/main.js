@@ -9138,24 +9138,24 @@ var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
 var _user$project$Main$sampleText = 'What do you thinks of grammar checkers? Please not that they are not perfect. Style issues get a blue marker: It\'s 5 P.M. in the afternoon. LanguageTool 3.8 was released on Thursday, 27 June 2017.';
-var _user$project$Main$Message = F3(
+var _user$project$Main$Comment = F3(
 	function (a, b, c) {
 		return {message: a, offset: b, length: c};
 	});
-var _user$project$Main$messageDecoder = A4(
+var _user$project$Main$commentDecoder = A4(
 	_elm_lang$core$Json_Decode$map3,
-	_user$project$Main$Message,
+	_user$project$Main$Comment,
 	A2(_elm_lang$core$Json_Decode$field, 'message', _elm_lang$core$Json_Decode$string),
 	A2(_elm_lang$core$Json_Decode$field, 'offset', _elm_lang$core$Json_Decode$int),
 	A2(_elm_lang$core$Json_Decode$field, 'length', _elm_lang$core$Json_Decode$int));
-var _user$project$Main$messageListDecoder = A2(
+var _user$project$Main$commentListDecoder = A2(
 	_elm_lang$core$Json_Decode$at,
 	{
 		ctor: '::',
 		_0: 'matches',
 		_1: {ctor: '[]'}
 	},
-	_elm_lang$core$Json_Decode$list(_user$project$Main$messageDecoder));
+	_elm_lang$core$Json_Decode$list(_user$project$Main$commentDecoder));
 var _user$project$Main$Model = F3(
 	function (a, b, c) {
 		return {text: a, comments: b, activeCommentId: c};
@@ -9276,7 +9276,7 @@ var _user$project$Main$requestProofread = function (text) {
 		'application/x-www-form-urlencoded',
 		_user$project$Main$encodeProofreadRequest(text));
 	var url = 'https://languagetool.org/api/v2/check';
-	var request = A3(_elm_lang$http$Http$post, url, body, _user$project$Main$messageListDecoder);
+	var request = A3(_elm_lang$http$Http$post, url, body, _user$project$Main$commentListDecoder);
 	return A2(_elm_lang$http$Http$send, _user$project$Main$ProofreadResult, request);
 };
 var _user$project$Main$update = F2(
